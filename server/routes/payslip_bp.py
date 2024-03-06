@@ -211,7 +211,7 @@ class PayslipByID(Resource):
 
         return {"remuneration": remuneration_data, "remuneration_descriptions": result}
 
-    @hr_required()
+    # @hr_required()
     def patch(self, remuneration_id):
         data = patch_args.parse_args()
         # get remuneration data
@@ -237,7 +237,17 @@ class PayslipByID(Resource):
             for desc_data in remuneration_descriptions_data:
                 # ensure remuneration description has an id
                 if "id" not in desc_data:
-                    abort(400, detail="provide an id field")
+                    # create new remuneration description
+                    new_remuneration_description = RemunerationDescription(
+                        remuneration_id=remuneration.id,
+                        type=desc_data['type'],
+                        name=desc_data['name'],
+                        description=desc_data['description'],
+                        amount=desc_data['amount']
+                    )
+                    db.session.add(new_remuneration_description)
+                    db.session.commit()
+                    continue
                 # search for the renumeration in database
                 remuneration_description = RemunerationDescription.query.filter_by(
                     id=desc_data['id']).first()
