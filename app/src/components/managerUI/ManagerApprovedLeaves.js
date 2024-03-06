@@ -8,9 +8,7 @@ const ManagerApprovedLeaves = () => {
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await axios.get(
-          "https://hrs-iymg.onrender.com/leave_approvals"
-        );
+        const response = await axios.get("/leave_approvals");
         const approvedLeaves = response.data.leave_approvals
           .filter((leave) => leave.approved_by_manager)
           .sort(

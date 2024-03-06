@@ -13,7 +13,7 @@ const HRViewLeaves = () => {
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await axios.get("https://hrs-iymg.onrender.com/leaves", {
+        const response = await axios.get("/leaves", {
           headers: {
             Authorization: `Bearer ${retrieve().access_token}`,
           },
@@ -31,7 +31,7 @@ const HRViewLeaves = () => {
     fetchLeaves();
 
     axios
-      .get("https://hrs-iymg.onrender.com/managers_with_names", {
+      .get("/managers_with_names", {
         headers: {
           Authorization: "Bearer " + retrieve().access_token,
         },
@@ -51,7 +51,7 @@ const HRViewLeaves = () => {
       hr_id: retrieve().hr.id,
     };
 
-    fetch("https://hrs-iymg.onrender.com/leave_approvals", {
+    fetch("/leave_approvals", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

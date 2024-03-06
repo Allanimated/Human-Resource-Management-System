@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Formik, Field, Form } from 'formik';
-import axios from 'axios';
-import './AddEmployee.css';
+import React, { useState, useEffect } from "react";
+import { Formik, Field, Form } from "formik";
+import axios from "axios";
+import "./AddEmployee.css";
 
 const AddEmployeeForm = () => {
   const [departments, setDepartments] = useState([]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get('https://hrs-iymg.onrender.com/departments');
+        const response = await axios.get("/departments");
         setDepartments(response.data);
       } catch (error) {
-        console.error('Error fetching departments:', error);
+        console.error("Error fetching departments:", error);
       }
     };
 
@@ -22,24 +22,27 @@ const AddEmployeeForm = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const response = await axios.post('https://hrs-iymg.onrender.com/employees', values);
-      console.log('New Employee:', response.data);
-      setMessage('Employee added successfully!');
+      const response = await axios.post("/employees", values);
+      console.log("New Employee:", response.data);
+      setMessage("Employee added successfully!");
     } catch (error) {
-      console.error('Error adding employee:', error);
-      setMessage('Error adding employee.');
+      console.error("Error adding employee:", error);
+      setMessage("Error adding employee.");
     }
   };
 
   return (
-    <div className='add-employee-form' style={{ marginLeft: "280px", marginTop:"20px"}}>
+    <div
+      className="add-employee-form"
+      style={{ marginLeft: "280px", marginTop: "20px" }}
+    >
       <Formik
         initialValues={{
-          email: '',
-          password: '',
-          personal_no:"",
-          role:"",
-          dept_id: ''
+          email: "",
+          password: "",
+          personal_no: "",
+          role: "",
+          dept_id: "",
         }}
         onSubmit={handleSubmit}
       >
@@ -71,8 +74,10 @@ const AddEmployeeForm = () => {
             Department:
             <Field as="select" name="dept_id" required>
               <option value="">Select a department</option>
-              {departments.map(department => (
-                <option key={department.id} value={department.id}>{department.name}</option>
+              {departments.map((department) => (
+                <option key={department.id} value={department.id}>
+                  {department.name}
+                </option>
               ))}
             </Field>
           </label>

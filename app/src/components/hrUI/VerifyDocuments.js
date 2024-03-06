@@ -7,7 +7,7 @@ const VerifyDocuments = () => {
   const { employeeId } = useParams();
 
   useEffect(() => {
-    fetch(`https://hrs-iymg.onrender.com/documents/employee/${employeeId}`, {
+    fetch(`/documents/employee/${employeeId}`, {
       headers: {
         Authorization: "Bearer " + retrieve().access_token,
       },
@@ -29,12 +29,20 @@ const VerifyDocuments = () => {
   return (
     <div
       className="content-wrapper"
-      style={{ marginLeft: "280px", backgroundColor: "white", marginTop: "20px" }}
-
+      style={{
+        marginLeft: "280px",
+        backgroundColor: "white",
+        marginTop: "20px",
+      }}
     >
-       <h1 style={{ marginLeft:"500px", marginBottom:"50px"}}>Verify Documents</h1>
+      <h1 style={{ marginLeft: "500px", marginBottom: "50px" }}>
+        Verify Documents
+      </h1>
       {documents.length > 0 ? (
-        <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
+        <table
+          className="ui striped table"
+          style={{ width: "1200px", marginLeft: "60px", marginBottom: "20px" }}
+        >
           <thead>
             <tr>
               <th>Name</th>
@@ -48,7 +56,11 @@ const VerifyDocuments = () => {
                 <td>{document.name}</td>
                 <td>{document.type}</td>
                 <td>
-                  <a href={document.link_url} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={document.link_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     View
                   </a>
                 </td>

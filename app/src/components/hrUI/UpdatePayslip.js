@@ -12,7 +12,7 @@ const UpdatePayslip = ({
 
   //fetch employee profiles
   useEffect(() => {
-    fetch("https://hrs-iymg.onrender.com/employeeProfiles")
+    fetch("/employeeProfiles")
       .then((resp) => resp.json())
       .then((data) => setEmployees(data));
   }, []);
@@ -44,13 +44,26 @@ const UpdatePayslip = ({
 
   //delete remuneration data
 
-  const handleDelete = (index) => {
+  const handleDelete = (index, id) => {
     const remunerations = remuneration.remunerations;
     remunerations.splice(index, 1);
     setRemuneration({
       ...remuneration,
       remunerations: remunerations,
     });
+    fetch(`/remuneration_descs/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + retrieve().access_token,
+      },
+    }).then(resp => {
+      if (resp.ok) {
+        resp.json().then(data => console.log(data))
+      } else {
+        resp.json().then(error => console.log(error))
+      }
+    })
   };
 
   // handle adding a compensation
@@ -72,7 +85,7 @@ const UpdatePayslip = ({
   //submit data
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`https://hrs-iymg.onrender.com/payslip/${remuneration.id}`, {
+    fetch(`/payslip/${remuneration.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -216,7 +229,7 @@ const UpdatePayslip = ({
               <div className="col-sm-4 mb-3">
                 <button
                   className="btn btn-warning btn-sm float-right"
-                  onClick={(e) => handleDelete(index)}
+                  onClick={(e) => handleDelete(index, remuneration.id)}
                 >
                   Delete
                 </button>

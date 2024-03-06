@@ -10,7 +10,7 @@ const EmployeeProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://hrs-iymg.onrender.com/employees/${id}`)
+    fetch(`/employees/${id}`)
       .then((response) => {
         if (!response.ok) {
           response.json().then((error) => console.log(error));

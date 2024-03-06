@@ -20,7 +20,7 @@ const RequestPayslip = ({ setPayslip }) => {
     }),
     onSubmit: (values) => {
       // fetch payslip request
-      fetch(`https://hrs-iymg.onrender.com/payslip?year=${values.year}&month=${values.month}`, {
+      fetch(`/payslip?year=${values.year}&month=${values.month}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

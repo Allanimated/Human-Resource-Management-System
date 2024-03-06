@@ -10,7 +10,7 @@ const ManagerProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://hrs-iymg.onrender.com/managers/${id}`)
+    fetch(`/managers/${id}`)
       .then((response) => response.json())
       .then((data) => setManager(data))
       .catch((err) => console.log(err));
@@ -23,7 +23,7 @@ const ManagerProfile = () => {
   const managerProfileData = manager?.manager_profile[0];
 
   function handleLogout(e) {
-    fetch("https://hrs-iymg.onrender.com/logout", {
+    fetch("/logout", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + retrieve().access_token,
@@ -37,12 +37,11 @@ const ManagerProfile = () => {
   }
 
   const handleEditButtonClick = () => {
-    navigate('/manager/manager_update_profile');
+    navigate("/manager/manager_update_profile");
   };
   const handleResetPasswordButtonClick = () => {
-    navigate('/change_password');
+    navigate("/change_password");
   };
-
 
   return (
     <div
@@ -129,14 +128,22 @@ const ManagerProfile = () => {
                   <h5 className="text-secondary">No leaves have been set</h5>
                 )}
 
-        <button type="update" className="btn btn-primary" onClick={handleEditButtonClick}>
-          Edit Profile
-        </button>
-        <button type="update" className="btn btn-primary" onClick={handleResetPasswordButtonClick}>
-          Reset Password
-        </button>
-            </div>
-            {/* <div className="card mb-3 content">
+                <button
+                  type="update"
+                  className="btn btn-primary"
+                  onClick={handleEditButtonClick}
+                >
+                  Edit Profile
+                </button>
+                <button
+                  type="update"
+                  className="btn btn-primary"
+                  onClick={handleResetPasswordButtonClick}
+                >
+                  Reset Password
+                </button>
+              </div>
+              {/* <div className="card mb-3 content">
               <h1 className="m-3 pt-3">Recent Payslip</h1>
               {manager?.remunerations.length !== 0 ? (
                 manager?.remunerations.map((payslip) => (

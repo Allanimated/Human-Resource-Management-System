@@ -9,18 +9,18 @@ const ManagerEditProfile = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const  id  =  retrieve().manager.id
+  const id = retrieve().manager.id;
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [managerProfileData, setManagerProfileData] = useState({});
 
   useEffect(() => {
-    fetch(`https://hrs-iymg.onrender.com/managers/${id}`)
+    fetch(`/managers/${id}`)
       .then((response) => response.json())
       .then((data) => setManagerProfileData(data.manager_profile[0]))
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(managerProfileData)
+  console.log(managerProfileData);
 
   const MAX_FILE_SIZE = 10000000; // 10MB
   const validFileExtensions = {
@@ -37,7 +37,9 @@ const ManagerEditProfile = () => {
     const file = event.target.files[0];
     if (file) {
       const size = file.size;
-      const isValid = validFileExtensions.image.includes(getExtension(file.name));
+      const isValid = validFileExtensions.image.includes(
+        getExtension(file.name)
+      );
       if (size > MAX_FILE_SIZE) setError("The file is too large");
       else if (!isValid) setError("The file type is not supported");
       else {
@@ -79,10 +81,9 @@ const ManagerEditProfile = () => {
 
       console.log(...formData.entries());
 
-      fetch(`https://hrs-iymg.onrender.com/managerProfiles/${managerProfileData.id}`, {
+      fetch(`/managerProfiles/${managerProfileData.id}`, {
         method: "PATCH",
         headers: {
-          
           Authorization: "Bearer " + retrieve().access_token,
         },
         body: formData,

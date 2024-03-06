@@ -1,30 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { retrieve } from '../Encryption';
+import React, { useState, useEffect } from "react";
+import { retrieve } from "../Encryption";
 
 const ViewEmployeesPerDepartment = () => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const deptId=retrieve().manager.dept_id
+  const deptId = retrieve().manager.dept_id;
 
   useEffect(() => {
-   
-    fetch(`https://hrs-iymg.onrender.com/employees_department/${deptId}`, {
-        headers: {
-          "Authorization": "Bearer " + retrieve().access_token,
-        }
-      })
-      .then(response => {
+    fetch(`/employees_department/${deptId}`, {
+      headers: {
+        Authorization: "Bearer " + retrieve().access_token,
+      },
+    })
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error("Failed to fetch data");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setEmployees(data);
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setError(error.message);
         setLoading(false);
       });
@@ -39,13 +38,27 @@ const ViewEmployeesPerDepartment = () => {
   }
 
   return (
-    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-      <h2 style={{marginLeft:"440px",marginBottom:"20px",marginTop:"20px"}}>Staff in my Department</h2>
-      <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
+    <div
+      className="content-wrapper"
+      style={{
+        marginLeft: "280px",
+        backgroundColor: "white",
+        marginTop: "20px",
+      }}
+    >
+      <h2
+        style={{ marginLeft: "440px", marginBottom: "20px", marginTop: "20px" }}
+      >
+        Staff in my Department
+      </h2>
+      <table
+        className="ui striped table"
+        style={{ width: "1200px", marginLeft: "60px", marginBottom: "20px" }}
+      >
         <thead>
           <tr>
             <th>Staff No</th>
-          
+
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
@@ -53,10 +66,10 @@ const ViewEmployeesPerDepartment = () => {
           </tr>
         </thead>
         <tbody>
-          {employees.map(employee => (
+          {employees.map((employee) => (
             <tr key={employee.id}>
               <td>{employee.personal_no}</td>
-              
+
               <td>{employee.first_name}</td>
               <td>{employee.last_name}</td>
               <td>{employee.email}</td>

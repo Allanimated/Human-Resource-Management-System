@@ -8,7 +8,7 @@ const RequestPayslip = ({ setPayslip, setRemuneration }) => {
   const [employees, setEmployees] = useState([]);
   //fetch employee profiles
   useEffect(() => {
-    fetch("https://hrs-iymg.onrender.com/employeeProfiles")
+    fetch("/employeeProfiles")
       .then((resp) => resp.json())
       .then((data) => setEmployees(data));
   }, []);
@@ -37,7 +37,7 @@ const RequestPayslip = ({ setPayslip, setRemuneration }) => {
       console.log(values);
       // fetch payslip request
       fetch(
-        `https://hrs-iymg.onrender.com/payslip?year=${values.year}&month=${values.month}&employee_id=${values.employee_id}`,
+        `/payslip?year=${values.year}&month=${values.month}&employee_id=${values.employee_id}`,
         {
           method: "GET",
           headers: {

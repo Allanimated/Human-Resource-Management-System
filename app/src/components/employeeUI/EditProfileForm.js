@@ -16,7 +16,7 @@ const EditProfileForm = () => {
   const [profilePhoto, setProfilePhoto] = useState(null);
 
   useEffect(() => {
-    fetch(`https://hrs-iymg.onrender.com/employees/${id}`)
+    fetch(`/employees/${id}`)
       .then((response) => response.json())
       .then((data) => setEmployeeProfileData(data.employee_profiles[0]))
       .catch((err) => console.log(err));
@@ -83,7 +83,7 @@ const EditProfileForm = () => {
 
       console.log(...formData.entries());
 
-      fetch(`https://hrs-iymg.onrender.com/employeeProfiles/${employeeProfileData.id}`, {
+      fetch(`/employeeProfiles/${employeeProfileData.id}`, {
         method: "PATCH",
         headers: {
           Authorization: "Bearer " + retrieve().access_token,
